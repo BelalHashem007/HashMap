@@ -1,8 +1,8 @@
 const HashMap = function () {
-  const loadFactor = 0.8;
+  const loadFactor = 0.75;
   let capacity = 16;
   let arr = [];
-  let bucketLength = 0;
+  let uniqueKeys = 0;
 
   function hash(key) {
     let hashCode = 0;
@@ -19,24 +19,42 @@ const HashMap = function () {
     if (arr.hasOwnProperty(index)) {
       const head = arr[index].getHead();
       let tmp = head;
-      while (tmp.nextNode != null) {
+      while (tmp != null) {
         if (tmp.hasOwnProperty(key)) {
           tmp[key] = value;
           return;
         } //update value for existing keys.
         tmp = tmp.nextNode;
       }
-      arr[index].addLast(key, value);
+      uniqueKeys++;
+      arr[index].addLast(key, value); //push the node into the end of the linkedList if no existing key
     } else {
-      const newBucket = bucket(key, value);
+      uniqueKeys++;
+      const newBucket = bucket(key, value); //make new linkedList
       arr[index] = newBucket;
-      if (bucketLength > capacity * loadFactor) {
-        capacity *= 2;
-      }
+    }
+    if (uniqueKeys > (capacity * loadFactor)) {
+      capacity *= 2;
+      resizeArray();
     }
   }
+  function resizeArray() {
+    console.log("resizing is happening");
+    uniqueKeys = 0;
+    const oldArray = arr;
+    arr = [];
+    oldArray.forEach((bucket) => {
+      let head = bucket.getHead();
+      while (head != null) {
+        for (let key in head) {
+          set(key,head[key])
+          break;
+        }
+        head = head.nextNode;
+      }
+    });
+  }
   function bucket(key, value) {
-    bucketLength++;
     const newBucket = LinkedList();
     newBucket.addFirst(key, value);
     return newBucket;

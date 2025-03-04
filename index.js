@@ -1,5 +1,17 @@
 import { HashMap } from "./Hash.js";
 
+const testData = [
+    ["notebook", "gray"],
+    ["ocean", "blue"],
+    ["piano", "black"],
+    ["queen", "gold"],
+    ["robot", "silver"],
+    ["sunflower", "yellow"],
+    ["tiger", "orange"],
+    ["umbrella", "red"],
+    ["volcano", "brown"],
+    ["whale", "navy"]
+  ];
 const test = HashMap();
 test.set("apple", "red");
 test.set("banana", "yellow");
@@ -13,6 +25,8 @@ test.set("iceCream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-//hashMap1.set("qpple", "white");
 console.log(test.entries());
-console.log(test.values());
+test.set('moon', 'silver');
+testData.forEach(([key,value])=>  test.set(key,value))
+console.log(test.entries());
+
