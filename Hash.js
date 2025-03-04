@@ -43,6 +43,7 @@ const HashMap = function () {
   }
 
   function values() {
+    if (arr.length == 0) return "Empty HashMap.";
     arr.forEach(logBucket);
 
     function logBucket(bucket) {
@@ -79,18 +80,49 @@ const HashMap = function () {
 
   function remove(key) {
     let index = hash(key);
-    if (!Object.hasOwn(arr, index)){
+    if (!Object.hasOwn(arr, index)) {
       return false;
     }
     let list = arr[index];
-    let removed =  list.removeNode(key);
-    if (list.getHead() == null){
-       delete arr[index];
+    let removed = list.removeNode(key);
+    if (list.getHead() == null) {
+      delete arr[index];
     }
     return removed;
   }
 
-  return { set, values, get, has, remove };
+  function length() {
+    let keysLength = 0;
+    arr.forEach((bucket) => {
+      let head = bucket.getHead();
+      while (head != null) {
+        keysLength++;
+        head = head.nextNode;
+      }
+    });
+    return keysLength;
+  }
+
+  function clear() {
+    arr = [];
+  }
+
+  function keys() {
+    if (arr.length == 0) return "Empty HashMap.";
+    let arrayOfKeys = [];
+    arr.forEach((bucket) => {
+      let head = bucket.getHead();
+      while (head != null) {
+        for (let key in head) {
+          arrayOfKeys.push(key);
+          break;
+        }
+        head = head.nextNode;
+      }
+    });
+    return arrayOfKeys;
+  }
+  return { set, values, get, has, remove, length, clear, keys };
 };
 
 const LinkedList = function () {
@@ -114,11 +146,11 @@ const LinkedList = function () {
   function removeNode(key) {
     let tmp = head;
     let prev = null;
-    while (tmp != null){
-      if (Object.hasOwn(tmp,key)){
-        if (tmp == head){
+    while (tmp != null) {
+      if (Object.hasOwn(tmp, key)) {
+        if (tmp == head) {
           head = head.nextNode;
-        }else {
+        } else {
           prev.nextNode = tmp.nextNode;
         }
         return true;
@@ -128,7 +160,7 @@ const LinkedList = function () {
     }
     return false;
   }
-  return { addFirst, addLast, getHead , removeNode};
+  return { addFirst, addLast, getHead, removeNode };
 };
 
 export { HashMap };
