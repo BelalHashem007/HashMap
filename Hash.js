@@ -42,13 +42,23 @@ const HashMap = function () {
     return newBucket;
   }
 
-  function values() {
+  function entries() {
     if (arr.length == 0) return "Empty HashMap.";
-    arr.forEach(logBucket);
+    let arrayOfEntries = [];
 
-    function logBucket(bucket) {
-      console.log(bucket.getHead());
+    arr.forEach(entry);
+
+    function entry(bucket) {
+      let head = bucket.getHead();
+      while (head != null) {
+        for (let key in head) {
+          arrayOfEntries.push([key, head[key]]);
+          break;
+        }
+        head = head.nextNode;
+      }
     }
+    return arrayOfEntries;
   }
 
   function get(key) {
@@ -122,7 +132,26 @@ const HashMap = function () {
     });
     return arrayOfKeys;
   }
-  return { set, values, get, has, remove, length, clear, keys };
+
+  function values() {
+    if (arr.length == 0) return "Empty HashMap.";
+    let arrayOfValues = [];
+    arr.forEach(getValues);
+
+    function getValues(bucket) {
+      let head = bucket.getHead();
+      while (head != null) {
+        for (let key in head) {
+          arrayOfValues.push(head[key]);
+          break;
+        }
+        head = head.nextNode;
+      }
+    }
+
+    return arrayOfValues;
+  }
+  return { set, entries, get, has, remove, length, clear, keys, values };
 };
 
 const LinkedList = function () {

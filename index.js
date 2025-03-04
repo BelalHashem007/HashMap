@@ -14,5 +14,5 @@ test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
 //hashMap1.set("qpple", "white");
-console.log(test.keys());
-console.log(test.length());
+console.log(test.entries());
+console.log(test.values());
