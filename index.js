@@ -13,5 +13,8 @@ test.set('iceCream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
+test.set("zzzz","a7eh")
 //hashMap1.set("qpple", "white");
+console.log(test.values());
+console.log(test.remove("hat"))
 console.log(test.values());
